@@ -6,12 +6,12 @@
     "version": "1.0.0"
   },
   "paths": {
-    "/todoitems": {
+    "/movies": {
       "get": {
         "tags": [
-          "TodoItems"
+          "Movies"
         ],
-        "operationId": "GetTodoItems",
+        "operationId": "GetAllMovies",
         "responses": {
           "200": {
             "description": "",
@@ -20,7 +20,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/TodoItemDto"
+                    "$ref": "#/components/schemas/MovieDto"
                   }
                 }
               }
@@ -40,16 +40,79 @@
       },
       "post": {
         "tags": [
-          "TodoItems"
+          "Movies"
         ],
-        "operationId": "CreateTodoItem",
+        "operationId": "CreateMovie",
         "requestBody": {
           "x-name": "command",
           "description": "",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateTodoItemCommand"
+                "$ref": "#/components/schemas/CreateMovieCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "guid"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "guid"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Movies"
+        ],
+        "operationId": "UpdateMovie",
+        "requestBody": {
+          "x-name": "command",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateMovieCommand"
               }
             }
           },
@@ -101,11 +164,146 @@
           }
         }
       }
+    },
+    "/movies/search/title": {
+      "get": {
+        "tags": [
+          "Movies"
+        ],
+        "operationId": "GetMoviesByTitle",
+        "parameters": [
+          {
+            "name": "title",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MovieDto"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/movies/search/genre": {
+      "get": {
+        "tags": [
+          "Movies"
+        ],
+        "operationId": "GetMoviesByGenre",
+        "parameters": [
+          {
+            "name": "genre",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MovieDto"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/movies/search": {
+      "get": {
+        "tags": [
+          "Movies"
+        ],
+        "operationId": "GetMoviesByKeywordSearch",
+        "parameters": [
+          {
+            "name": "keyword",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MovieDto"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
-      "TodoItemDto": {
+      "MovieDto": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -114,11 +312,17 @@
             "format": "guid"
           },
           "title": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
-          "done": {
-            "type": "boolean"
+          "genre": {
+            "type": "string"
+          },
+          "rating": {
+            "type": "string"
+          },
+          "length": {
+            "type": "string",
+            "format": "duration"
           }
         }
       },
@@ -175,12 +379,33 @@
           }
         ]
       },
-      "CreateTodoItemCommand": {
+      "CreateMovieCommand": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
           "title": {
             "type": "string"
+          }
+        }
+      },
+      "UpdateMovieCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "genre": {
+            "type": "string"
+          },
+          "rating": {
+            "type": "number",
+            "format": "double"
+          },
+          "lengthMinutes": {
+            "type": "number",
+            "format": "double"
           }
         }
       }

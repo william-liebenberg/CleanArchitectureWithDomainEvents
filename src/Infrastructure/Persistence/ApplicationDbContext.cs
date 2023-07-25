@@ -9,19 +9,19 @@ namespace CleanArchitectureWithDomainEvents.Infrastructure.Persistence;
 public class ApplicationDbContext : DbContext, IApplicationDbContext
 {
     private readonly EntitySaveChangesInterceptor _saveChangesInterceptor;
-    private readonly DispatchDomainEventsInterceptor _dispatchDomainEventsInterceptor;
+    private readonly PublishDomainEventsInterceptor _dispatchDomainEventsInterceptor;
 
     public ApplicationDbContext(
         DbContextOptions options,
         EntitySaveChangesInterceptor saveChangesInterceptor,
-        DispatchDomainEventsInterceptor dispatchDomainEventsInterceptor)
+        PublishDomainEventsInterceptor dispatchDomainEventsInterceptor)
         : base(options)
     {
         _saveChangesInterceptor = saveChangesInterceptor;
         _dispatchDomainEventsInterceptor = dispatchDomainEventsInterceptor;
     }
 
-    public DbSet<TodoItem> TodoItems => Set<TodoItem>();
+    public DbSet<Movie> Movies => Set<Movie>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

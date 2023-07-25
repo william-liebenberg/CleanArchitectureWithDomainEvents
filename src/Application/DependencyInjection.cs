@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using CleanArchitectureWithDomainEvents.Application.Common.Behaviours;
+using System.Reflection;
 
 namespace CleanArchitectureWithDomainEvents.Application;
 
@@ -7,7 +8,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
-        var applicationAssembly = typeof(DependencyInjection).Assembly;
+        Assembly applicationAssembly = typeof(DependencyInjection).Assembly;
 
         services.AddAutoMapper(applicationAssembly);
         services.AddValidatorsFromAssembly(applicationAssembly);
@@ -19,6 +20,7 @@ public static class DependencyInjection
             config.AddOpenBehavior(typeof(ValidationBehaviour<,>));
             config.AddOpenBehavior(typeof(PerformanceBehaviour<,>));
         });
+
         return services;
     }
 }

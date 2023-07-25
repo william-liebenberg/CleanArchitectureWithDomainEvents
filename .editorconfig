@@ -86,9 +86,9 @@ dotnet_remove_unnecessary_suppression_exclusions = none
 [*.cs]
 
 # var preferences
-csharp_style_var_elsewhere = true:suggestion # leave as suggestion
-csharp_style_var_for_built_in_types = true:suggestion # leave as suggestion
-csharp_style_var_when_type_is_apparent = true:suggestion # leave as suggestion
+csharp_style_var_elsewhere = false:suggestion # leave as suggestion
+csharp_style_var_for_built_in_types = false:suggestion # leave as suggestion
+csharp_style_var_when_type_is_apparent = false:suggestion # leave as suggestion
 
 # Expression-bodied members
 csharp_style_expression_bodied_accessors = true:silent
@@ -183,6 +183,15 @@ csharp_preserve_single_line_blocks = true
 csharp_preserve_single_line_statements = true
 csharp_style_prefer_method_group_conversion = true:silent
 csharp_style_prefer_top_level_statements = true:silent
+csharp_style_prefer_primary_constructors = true:suggestion
+csharp_style_allow_embedded_statements_on_same_line_experimental = true:silent
+csharp_style_prefer_extended_property_pattern = true:suggestion
+csharp_style_allow_blank_line_after_token_in_arrow_expression_clause_experimental = true:silent
+csharp_style_allow_blank_line_after_token_in_conditional_expression_experimental = true:silent
+csharp_style_allow_blank_line_after_colon_in_constructor_initializer_experimental = true:silent
+csharp_style_allow_blank_lines_between_consecutive_braces_experimental = true:silent
+csharp_style_prefer_readonly_struct = true:suggestion
+csharp_style_prefer_readonly_struct_member = true:suggestion
 
 #### Naming styles ####
 [*.{cs,vb}]
@@ -1371,3 +1380,5 @@ dotnet_diagnostic.S1481.severity = warning
 tab_width = 4
 indent_size = 4
 end_of_line = crlf
+dotnet_style_allow_statement_immediately_after_block_experimental = true:silent
+dotnet_style_allow_multiple_blank_lines_experimental = true:silent

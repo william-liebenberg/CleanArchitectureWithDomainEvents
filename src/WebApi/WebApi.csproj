@@ -49,5 +49,6 @@
     <!-- nswag will run all *.nswag and nswag.json by default -->       
     <Exec WorkingDirectory="$(ProjectDir)" Command="$(NSwagExe_Net70) run /variables:Configuration=$(Configuration)" />
   </Target>
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1development_1json__JsonSchema="appsettings" /></VisualStudio></ProjectExtensions>
 
 </Project>

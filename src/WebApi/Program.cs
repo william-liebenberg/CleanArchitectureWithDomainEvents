@@ -40,7 +40,7 @@ app.UseRouting();
 
 app.UseExceptionFilter();
 
-app.MapTodoItemEndpoints();
+app.MapMovieEndpoints();
 
 app.Run();
 
